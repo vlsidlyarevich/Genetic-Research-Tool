@@ -13,12 +13,14 @@ public class SequenceSearcher {
     private Pattern wordPattern;
     private Pattern seqPatternWithoutSEQID;
     private Pattern seqPatternWithSEQID;
+    private Pattern aminPattern;
 
     public SequenceSearcher(HashSet<String> words) {
         this.words = words;
         wordPattern = Pattern.compile(Patterns.WORD_PATTERN);
         seqPatternWithoutSEQID = Pattern.compile(Patterns.SEQ_PATTERN_WITHOUT_ID);
         seqPatternWithSEQID = Pattern.compile(Patterns.SEQ_PATTERN_WITH_ID);
+        aminPattern = Pattern.compile(Patterns.SEQ_PATTERN_AMIN);
     }
 
     public String searchSeq(String patent) {
@@ -36,14 +38,17 @@ public class SequenceSearcher {
 
             Matcher seqMatcher = seqPatternWithoutSEQID.matcher(word);
             Matcher seqMatcherWithSEQID = seqPatternWithSEQID.matcher(word);
+            Matcher aminSeqMatcher = aminPattern.matcher(word);
 
             if (!this.words.contains(word.toLowerCase()) && seqMatcher.matches() ||
-                    !this.words.contains(word.toLowerCase()) && seqMatcherWithSEQID.matches()) {
+                    !this.words.contains(word.toLowerCase()) && seqMatcherWithSEQID.matches() ||
+                        !this.words.contains(word.toLowerCase()) && aminSeqMatcher.matches()) {
 
-                result.insert(0, "Patent No:" + Utils.getPatentID(patent) + "\n" + "Sequences founded:" + seqNumber + "\n");
+                System.out.println(word);
+                result.insert(0, "Patent No:" + Utils.getPatentID(patent));
                 return result.toString();
 
-            } 
+            }
             position = wordMatcher.end();
         }
 

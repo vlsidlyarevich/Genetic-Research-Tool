@@ -14,14 +14,14 @@ public class PatentParser {
 
     public static void main(String[] args) throws IOException {
 
-        XmlReader fileReader = new XmlReader("new.xml");
+        XmlReader fileReader = new XmlReader(args[0]);
 
         String patent;
 
-        FileReader reader = new FileReader("List of Words.txt");
+        FileReader reader = new FileReader(args[1]);
         HashSet<String> words = reader.getWordsSet();
         SequenceSearcher sequenceSearcher = new SequenceSearcher(words);
-        WriterToFile writer = new WriterToFile("Output.txt");
+        WriterToFile writer = new WriterToFile(args[2]);
 
         while ((patent = fileReader.getPatent()) != null) {
             String temp = sequenceSearcher.searchSeq(patent);
