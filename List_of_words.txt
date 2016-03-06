@@ -19950,3 +19950,15 @@ applicability        ?
 federally            ?
 easytrack            ?
 bkpbeelm             ?
+interfaces           ?
+enhancements         ?
+elastically          ?
+disassembling        ?
+centerline           ?
+disablement          ?
+interactive          ?
+retractable          ?
+patterning           ?
+patterning           ?
+transmitting         ?
+smartmedia           ?
