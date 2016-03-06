@@ -1,8 +1,9 @@
 package com.github.vlsidlyarevich.client;
 
-import com.github.vlsidlyarevich.FileReader;
-import com.github.vlsidlyarevich.SequenceSearcher;
-import com.github.vlsidlyarevich.XmlReader;
+import com.github.vlsidlyarevich.fileUtils.FileReader;
+import com.github.vlsidlyarevich.core.SequenceSearcher;
+import com.github.vlsidlyarevich.fileUtils.WriterToFile;
+import com.github.vlsidlyarevich.fileUtils.XmlReader;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -20,11 +21,16 @@ public class PatentParser {
         FileReader reader = new FileReader("List of Words.txt");
         HashSet<String> words = reader.getWordsSet();
         SequenceSearcher sequenceSearcher = new SequenceSearcher(words);
+        WriterToFile writer = new WriterToFile("Output.txt");
 
-        while ((patent = fileReader.getPatent())!= null) {
-
-        System.out.println(sequenceSearcher.searchSeq(patent));
+        while ((patent = fileReader.getPatent()) != null) {
+            String temp = sequenceSearcher.searchSeq(patent);
+            if (temp != null) {
+                writer.writeToFile(temp);
+            }
         }
+        writer.closeWriter();
+
     }
 
 }

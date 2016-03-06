@@ -1,4 +1,4 @@
-package com.github.vlsidlyarevich;
+package com.github.vlsidlyarevich.core;
 
 import com.github.vlsidlyarevich.utils.Patterns;
 import com.github.vlsidlyarevich.utils.Utils;
@@ -24,7 +24,7 @@ public class SequenceSearcher {
     public String searchSeq(String patent) {
 
         StringBuilder result = new StringBuilder();
-        String word = "";
+        String word;
         int position = 0;
         int curSeqNumber = 0;
         int seqNumber = 0;
@@ -37,23 +37,17 @@ public class SequenceSearcher {
             Matcher seqMatcher = seqPatternWithoutSEQID.matcher(word);
             Matcher seqMatcherWithSEQID = seqPatternWithSEQID.matcher(word);
 
-            if (!this.words.contains(word.toLowerCase()) && seqMatcher.matches()) {
-                result.append("Sequence " + ++curSeqNumber + "\n");
-                result.append(wordMatcher.group() + "\n");
-                seqNumber++;
-            } else if (!this.words.contains(word.toLowerCase()) && seqMatcherWithSEQID.matches()) {
-                result.append("Sequence " + Utils.getSeqID(word) + "\n");
-                result.append(wordMatcher.group() + "\n");
-                seqNumber++;
-            }
+            if (!this.words.contains(word.toLowerCase()) && seqMatcher.matches() ||
+                    !this.words.contains(word.toLowerCase()) && seqMatcherWithSEQID.matches()) {
+
+                result.insert(0, "Patent No:" + Utils.getPatentID(patent) + "\n" + "Sequences founded:" + seqNumber + "\n");
+                return result.toString();
+
+            } 
             position = wordMatcher.end();
         }
 
-        if (!result.toString().equals("")) {
-            result.insert(0, "Patent No:" + Utils.getPatentID(patent) + "\n" + "Sequences founded:" + seqNumber + "\n");
-        }
-
-        return result.toString();
+        return null;
     }
 
 

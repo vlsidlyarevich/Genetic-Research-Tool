@@ -4,8 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public  class Utils {
-
+public class Utils {
 
 
     public static String getPatentID(String patent) {
@@ -21,7 +20,7 @@ public  class Utils {
 
     public static String getSeqID(String word) {
 
-        return word.replaceAll("\\D+","");
+        return word.replaceAll("\\D+", "");
     }
 
 }

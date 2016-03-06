@@ -1,6 +1,7 @@
-package com.github.vlsidlyarevich;
+package com.github.vlsidlyarevich.fileUtils;
 
 import java.io.*;
+import java.io.FileReader;
 
 public class XmlReader {
 
@@ -8,8 +9,8 @@ public class XmlReader {
     private File file;
 
     public XmlReader(String fileName) throws FileNotFoundException {
-        file = new File(fileName);
-        this.reader = new BufferedReader(new java.io.FileReader(file));
+        this.file = new File(fileName);
+        this.reader = new BufferedReader(new FileReader(this.file));
     }
 
     public String getPatent() throws IOException {
@@ -18,20 +19,16 @@ public class XmlReader {
 
         while ((line = reader.readLine()) != null) {
             if (line.matches("^\\s*<\\?xml version=\"1\\.0\" encoding=\"UTF-8\"\\?>$")) {
-                break;
+                continue;
             }
-        }
-
-        if (line != null) {
-            while (!line.matches("^\\s*(<[/]us-patent-grant>)$")) {
+            while (!line.matches("^\\s*(<\\/us-patent-grant>)$")) {
                 patent.append(line.trim()).append("\n");
                 line = reader.readLine();
             }
             patent.append("</us-patent-grant>");
             return patent.toString();
-        } else {
-            return null;
         }
+        return null;
     }
 
     public BufferedReader getReader() {
@@ -40,7 +37,7 @@ public class XmlReader {
 
     @Override
     public String toString() {
-        return "com.github.vlsidlyarevich.XmlReader{" +
+        return "com.github.vlsidlyarevich.fileUtils.XmlReader{" +
                 "reader=" + reader +
                 ", file=" + file +
                 '}';

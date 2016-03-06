@@ -1,4 +1,4 @@
-package com.github.vlsidlyarevich;
+package com.github.vlsidlyarevich.fileUtils;
 
 import java.io.*;
 import java.util.HashSet;
