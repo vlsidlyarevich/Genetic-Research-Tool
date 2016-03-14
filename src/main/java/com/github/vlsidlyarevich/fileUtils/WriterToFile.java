@@ -21,7 +21,8 @@ public class WriterToFile {
     public void writeToFile(String string){
         try {
             fileWriter.write(string);
-            fileWriter.write("\n------------------\n");
+            fileWriter.write("\n");
+            /*fileWriter.write("\n------------------\n");*/
         } catch (IOException e) {
             e.printStackTrace();
         }

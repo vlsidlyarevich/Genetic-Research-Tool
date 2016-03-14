@@ -20,7 +20,7 @@ public class FileReader {
             String temp;
 
             while ((temp = reader.readLine()) != null) {
-                temp = temp.substring(0, temp.indexOf(" ") + 1).trim();
+                /*temp = temp.substring(0, temp.indexOf(" ") + 1).trim();*/
                 words.add(temp);
             }
             return words;
