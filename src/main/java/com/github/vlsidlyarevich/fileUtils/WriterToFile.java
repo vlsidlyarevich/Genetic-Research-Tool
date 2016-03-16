@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class WriterToFile {
 
+
     private File file;
     private BufferedWriter fileWriter;
 

@@ -20,8 +20,11 @@ public class PatentParser {
 
         FileReader reader = new FileReader(args[1]);
         HashSet<String> words = reader.getWordsSet();
-        SequenceSearcher sequenceSearcher = new SequenceSearcher(words);
-        WriterToFile writer = new WriterToFile(args[2]);
+        FileReader smallWordsReader = new FileReader(args[2]);
+        HashSet<String> smallWordsSet = smallWordsReader.getWordsSet();
+
+        SequenceSearcher sequenceSearcher = new SequenceSearcher(words,smallWordsSet);
+        WriterToFile writer = new WriterToFile(args[3]);
 
         while ((patent = fileReader.getPatent()) != null) {
             String temp = sequenceSearcher.searchSeq(patent);
