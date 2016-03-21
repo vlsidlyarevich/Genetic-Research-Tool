@@ -99,6 +99,7 @@ public class SequenceSearcher {
                     && '(' != (word.charAt(i)) && ')' != (word.charAt(i)))
                 temp.append(word.charAt(i));
             if (radicals.contains(temp.toString()) || smallWordsSet.contains(temp.toString())) return true;
+            if (temp.length()>=3 && words.contains(temp.toString())) return true;
         }
         return false;
     }
