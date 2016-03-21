@@ -11,6 +11,7 @@ public class SequenceSearcher {
 
     private HashSet<String> words;
     private HashSet<String> smallWordsSet;
+    private HashSet<String> radicals;
     private Pattern wordPattern;
     private Pattern seqPatternWithoutSEQID;
     private Pattern seqPatternWithSEQID;
@@ -18,9 +19,10 @@ public class SequenceSearcher {
     private Pattern nucPatternWithoutSEQID;
     private int counter;
 
-    public SequenceSearcher(HashSet<String> words, HashSet<String> smallWords) {
+    public SequenceSearcher(HashSet<String> words, HashSet<String> smallWords, HashSet<String> radicals) {
         this.words = words;
         smallWordsSet = smallWords;
+        this.radicals = radicals;
         wordPattern = Pattern.compile(Patterns.WORD_PATTERN);
         seqPatternWithoutSEQID = Pattern.compile(Patterns.SEQ_PATTERN_WITHOUT_ID);
         seqPatternWithSEQID = Pattern.compile(Patterns.SEQ_PATTERN_WITH_ID);
@@ -69,7 +71,7 @@ public class SequenceSearcher {
                 return result.toString();
             }
 
-            if (!this.words.contains(word) && seqMatcher.matches()) {
+            if (!this.words.contains(word) && seqMatcher.matches() && !chemicalSubstance(word)) {
                 System.out.println(++counter + ") " + word.toUpperCase());
                 result.insert(0, "Patent No:" + Utils.getPatentID(patent));
                 return result.toString();
@@ -87,6 +89,26 @@ public class SequenceSearcher {
         if(pos>=2) return text.subSequence(0, pos-1).toString();
         return null;
     }
+
+    private Boolean chemicalSubstance(String word){
+
+        int counter = 0;
+        StringBuilder temp = new StringBuilder();
+
+        for (int i = 0; i < word.length(); i++) {
+            if ('\\' != (word.charAt(i)) && '/' != (word.charAt(i))
+                    && '(' != (word.charAt(i)) && ')' != (word.charAt(i)))
+                temp.append(word.charAt(i));
+            if (radicals.contains(temp.toString())) {
+                temp.setLength(0);
+                counter++;
+            }
+            if (counter >= 2) return true;
+        }
+        return false;
+    }
+
+
 
 
     private Boolean compositeWord(String word) {

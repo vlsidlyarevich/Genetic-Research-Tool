@@ -21,7 +21,7 @@ public class FileReader {
 
             while ((temp = reader.readLine()) != null) {
                 /*temp = temp.substring(0, temp.indexOf(" ") + 1).trim();*/
-                words.add(temp);
+                words.add(temp.toLowerCase());
             }
             return words;
         }
