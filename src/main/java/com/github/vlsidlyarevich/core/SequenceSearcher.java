@@ -82,7 +82,6 @@ public class SequenceSearcher {
         return null;
     }
 
-
     private String deleteSeqIdPart(String text) {
 
         int pos = text.indexOf("seq");
@@ -103,6 +102,17 @@ public class SequenceSearcher {
         }
         return false;
     }
+
+    public String sequenceListCheck(String patent){
+
+        Pattern pattern = Pattern.compile("\\s*(<sequence-list)");
+        if(pattern.matcher(patent).find()){
+            return "Patent No:" + Utils.getPatentID(patent);
+        }
+        return null;
+    }
+
+
 
     @Override
     public String toString() {

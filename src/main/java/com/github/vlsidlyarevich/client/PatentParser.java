@@ -31,7 +31,13 @@ public class PatentParser {
         WriterToFile writer = new WriterToFile(args[4]);
 
         while ((patent = fileReader.getPatent()) != null) {
-            String temp = sequenceSearcher.searchSeq(patent);
+            String temp = "";
+
+            temp = sequenceSearcher.sequenceListCheck(patent);
+
+            if(temp==null)
+            temp = sequenceSearcher.searchSeq(patent);
+
             if (temp != null) {
                 writer.writeToFile(temp);
             }
