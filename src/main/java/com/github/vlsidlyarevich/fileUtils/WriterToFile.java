@@ -12,7 +12,7 @@ public class WriterToFile {
     private BufferedWriter fileWriter;
 
     public WriterToFile(String fileName) throws IOException {
-        this.file = new File(fileName);
+        this.file = new File(fileName.replaceAll(("\\.xml"),"-result.txt"));
         if (!this.file.exists()) {
             this.file.createNewFile();
         }

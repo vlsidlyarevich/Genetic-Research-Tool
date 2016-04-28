@@ -8,12 +8,15 @@ public class XmlReader {
 
     private BufferedReader reader;
     private File file;
-    private Pattern pattern;
+    private Pattern patentPattern;
+    private Pattern appPattern;
+
 
     public XmlReader(String fileName) throws FileNotFoundException {
         this.file = new File(fileName);
         this.reader = new BufferedReader(new FileReader(this.file));
-        this.pattern = Pattern.compile("\\s*(<!DOCTYPE us-patent-grant)");
+        this.patentPattern = Pattern.compile("\\s*(<!DOCTYPE us-patent-grant)");
+        this.appPattern = Pattern.compile("\\s*(<!DOCTYPE us-patent-application)");
     }
 
     public String getPatent() throws IOException {
@@ -24,7 +27,7 @@ public class XmlReader {
             if (line.matches("^\\s*<\\?xml version=\"1\\.0\" encoding=\"UTF-8\"\\?>$")) {
                 continue;
             }
-            if(pattern.matcher(line).find()){
+            if(patentPattern.matcher(line).find()){
                 while ( !line.matches("^\\s*(<\\/us-patent-grant>)$")) {
                     patent.append(line.trim()).append("\n");
                     line = reader.readLine();
@@ -32,7 +35,17 @@ public class XmlReader {
                 patent.append("</us-patent-grant>");
                 return patent.toString();
             }
+            else if(appPattern.matcher(line).find()){
+                while ( !line.matches("^\\s*(<\\/us-patent-application>)$")) {
+                    patent.append(line.trim()).append("\n");
+                    line = reader.readLine();
+                }
+                patent.append("</us-patent-application>");
+                return patent.toString();
+            }
+
             //!line.matches("^\\s*(<\\/sequence-cwu>)$") ||
+
         }
         return null;
     }

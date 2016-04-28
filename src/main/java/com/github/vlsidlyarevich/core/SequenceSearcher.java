@@ -53,26 +53,26 @@ public class SequenceSearcher {
 
             if (seqMatcherWithSEQID.matches()) {
                 if (!smallWordsSet.contains(this.deleteSeqIdPart(word).trim())) {
-                    System.out.println(++counter + ") " + word.toUpperCase());
+                    //System.out.println(++counter + ") " + word.toUpperCase());
                     result.insert(0, "Patent No:" + Utils.getPatentID(patent));
                     return result.toString();
                 }
             }
 
             if (aminSeqMatcher.matches()) {
-                System.out.println(++counter + ") " + word.toUpperCase());
+                //System.out.println(++counter + ") " + word.toUpperCase());
                 result.insert(0, "Patent No:" + Utils.getPatentID(patent));
                 return result.toString();
             }
 
             if (nucSeqMatcher.matches()) {
-                System.out.println(++counter + ") " + word.toUpperCase());
+                //System.out.println(++counter + ") " + word.toUpperCase());
                 result.insert(0, "Patent No:" + Utils.getPatentID(patent));
                 return result.toString();
             }
 
             if (!this.words.contains(word) && seqMatcher.matches() && !compositeWord(word)) {
-                System.out.println(++counter + ") " + word.toUpperCase());
+                //System.out.println(++counter + ") " + word.toUpperCase());
                 result.insert(0, "Patent No:" + Utils.getPatentID(patent));
                 return result.toString();
             }

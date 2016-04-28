@@ -1,7 +1,7 @@
 package com.github.vlsidlyarevich.client;
 
-import com.github.vlsidlyarevich.fileUtils.FileReader;
 import com.github.vlsidlyarevich.core.SequenceSearcher;
+import com.github.vlsidlyarevich.fileUtils.FileReader;
 import com.github.vlsidlyarevich.fileUtils.WriterToFile;
 import com.github.vlsidlyarevich.fileUtils.XmlReader;
 
@@ -14,7 +14,10 @@ public class PatentParser {
 
     public static void main(String[] args) throws IOException {
 
-        XmlReader fileReader = new XmlReader(args[0]);
+
+        String fileName = "ipa070412.xml";
+
+        XmlReader fileReader = new XmlReader(fileName);
 
         String patent;
 
@@ -28,19 +31,25 @@ public class PatentParser {
 
 
         SequenceSearcher sequenceSearcher = new SequenceSearcher(words,smallWordsSet,radicals);
-        WriterToFile writer = new WriterToFile(args[4]);
+        WriterToFile writer = new WriterToFile(fileName);
 
         while ((patent = fileReader.getPatent()) != null) {
             String temp = "";
 
             temp = sequenceSearcher.sequenceListCheck(patent);
+            if(temp!=null) {
+                //System.out.println(temp+ "------Listing");
 
-            if(temp==null)
+                continue;
+            }
+
             temp = sequenceSearcher.searchSeq(patent);
 
             if (temp != null) {
+                //System.out.println(temp);
                 writer.writeToFile(temp);
             }
+            //System.out.println(Utils.getPatentID(patent));
         }
         writer.closeWriter();
 
